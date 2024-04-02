@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,16 +7,18 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] float speed = 3;
+    [SerializeField] Animator animator;
 
     Vector2 vel = Vector2.zero;
     Rigidbody2D rb;
     SpriteRenderer spriteRenderer;
-    bool faceRight = false;
+    bool faceRight = true;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        spriteRenderer = rb.GetComponent<SpriteRenderer>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
     }
 
     void Update()
@@ -23,8 +26,17 @@ public class PlayerMovement : MonoBehaviour
         vel.x = Input.GetAxis("Horizontal") * speed;
         vel.y = Input.GetAxis("Vertical") * speed;
 
-        if (vel.x < 0 && !faceRight) FlipSprite();
-        if (vel.x > 0 && faceRight) FlipSprite();
+        if (vel.x > 0 && !faceRight) FlipSprite();
+        if (vel.x < 0 && faceRight) FlipSprite();
+
+        if (vel.x != 0 || vel.y != 0)
+        {
+            animator.SetFloat("Speed", 1);
+        }
+        else
+        {
+            animator.SetFloat("Speed", 0);
+        }
 
         rb.velocity = vel;
     }
