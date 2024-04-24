@@ -10,10 +10,12 @@ public class RunAway : MonoBehaviour
 
     private bool runAway = false;
     private int waypointNum = 0;
+    private bool faceRight = true;
+    private SpriteRenderer spriteRenderer;
 
     void Start()
     {
-        
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     void Update()
@@ -23,6 +25,8 @@ public class RunAway : MonoBehaviour
             float vel = Time.deltaTime * speed;
             transform.position = Vector2.MoveTowards(transform.position, waypoints[waypointNum].transform.position, vel);
             animator.SetFloat("Speed", 1);
+            if(transform.position.x - waypoints[waypointNum].transform.position.x > 0 && faceRight) FlipSprite();
+            if(transform.position.x - waypoints[waypointNum].transform.position.x < 0 && !faceRight) FlipSprite();
             if(transform.position == waypoints[waypointNum].transform.position )
             {
                 runAway = false;
@@ -38,5 +42,11 @@ public class RunAway : MonoBehaviour
         {
             runAway = true;
         }
+    }
+
+    private void FlipSprite()
+    {
+        faceRight = !faceRight;
+        spriteRenderer.flipX = !faceRight;
     }
 }
