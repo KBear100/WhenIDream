@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] float speed = 3;
     [SerializeField] Animator animator;
+    [SerializeField] bool jump = false;
 
     Vector2 vel = Vector2.zero;
     Rigidbody2D rb;
@@ -23,7 +24,7 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         vel.x = Input.GetAxis("Horizontal") * speed;
-        vel.y = Input.GetAxis("Vertical") * speed;
+        if(!jump) vel.y = Input.GetAxis("Vertical") * speed;
 
         if (vel.x > 0 && !faceRight) FlipSprite();
         if (vel.x < 0 && faceRight) FlipSprite();
