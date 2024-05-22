@@ -1,15 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class RunAway : MonoBehaviour
 {
     [SerializeField] float speed;
-    [SerializeField] GameObject[] waypoints;
+    [SerializeField] public GameObject[] waypoints;
     [SerializeField] Animator animator;
 
+    [HideInInspector] public int waypointNum = 0;
     private bool runAway = false;
-    private int waypointNum = 0;
     private bool faceRight = true;
     private SpriteRenderer spriteRenderer;
 
@@ -22,16 +23,19 @@ public class RunAway : MonoBehaviour
     {
         if(runAway)
         {
-            float vel = Time.deltaTime * speed;
-            transform.position = Vector2.MoveTowards(transform.position, waypoints[waypointNum].transform.position, vel);
-            animator.SetFloat("Speed", 1);
-            if(transform.position.x - waypoints[waypointNum].transform.position.x > 0 && faceRight) FlipSprite();
-            if(transform.position.x - waypoints[waypointNum].transform.position.x < 0 && !faceRight) FlipSprite();
-            if(transform.position == waypoints[waypointNum].transform.position )
+            if (waypointNum != waypoints.Length)
             {
-                runAway = false;
-                animator.SetFloat("Speed", 0);
-                waypointNum++;
+                float vel = Time.deltaTime * speed;
+                transform.position = Vector2.MoveTowards(transform.position, waypoints[waypointNum].transform.position, vel);
+                animator.SetFloat("Speed", 1);
+                if(transform.position.x - waypoints[waypointNum].transform.position.x > 0 && faceRight) FlipSprite();
+                if(transform.position.x - waypoints[waypointNum].transform.position.x < 0 && !faceRight) FlipSprite();
+                if(transform.position == waypoints[waypointNum].transform.position )
+                {
+                    runAway = false;
+                    animator.SetFloat("Speed", 0);
+                    waypointNum++;
+                }
             }
         }
     }

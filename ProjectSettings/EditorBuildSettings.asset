@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/ChildDream.unity
     guid: 75a01ff50ff74cc4ca0fb2867dfaf8a5
+  - enabled: 1
+    path: Assets/Scenes/TeenDream.unity
+    guid: b12b3c67f1fd8e243857b7d2c1b03373
   m_configObjects: {}

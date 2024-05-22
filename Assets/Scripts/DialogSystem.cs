@@ -11,8 +11,7 @@ public class DialogSystem : MonoBehaviour
 
     void Start()
     {
-        dialogText.text = "";
-        StartCoroutine(ShowDialog("You can't catch me!"));
+        
     }
 
     void Update()
